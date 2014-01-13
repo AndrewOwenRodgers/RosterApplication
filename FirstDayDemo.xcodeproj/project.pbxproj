@@ -22,6 +22,7 @@
 		07070141188460C600A6E92F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07070120188460C600A6E92F /* UIKit.framework */; };
 		07070149188460C600A6E92F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 07070147188460C600A6E92F /* InfoPlist.strings */; };
 		0707014B188460C600A6E92F /* FirstDayDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0707014A188460C600A6E92F /* FirstDayDemoTests.m */; };
+		07BF0DE918849F47007EE003 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07BF0DE818849F47007EE003 /* TextViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		07070146188460C600A6E92F /* FirstDayDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FirstDayDemoTests-Info.plist"; sourceTree = "<group>"; };
 		07070148188460C600A6E92F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0707014A188460C600A6E92F /* FirstDayDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstDayDemoTests.m; sourceTree = "<group>"; };
+		07BF0DE718849F47007EE003 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
+		07BF0DE818849F47007EE003 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				07070131188460C600A6E92F /* Main_iPad.storyboard */,
 				07070134188460C600A6E92F /* ViewController.h */,
 				07070135188460C600A6E92F /* ViewController.m */,
+				07BF0DE718849F47007EE003 /* TextViewController.h */,
+				07BF0DE818849F47007EE003 /* TextViewController.m */,
 				07070137188460C600A6E92F /* Images.xcassets */,
 				07070123188460C600A6E92F /* Supporting Files */,
 			);
@@ -256,6 +261,7 @@
 				07070136188460C600A6E92F /* ViewController.m in Sources */,
 				0707012D188460C600A6E92F /* AppDelegate.m in Sources */,
 				07070129188460C600A6E92F /* main.m in Sources */,
+				07BF0DE918849F47007EE003 /* TextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +482,7 @@
 				07070150188460C600A6E92F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		07070151188460C600A6E92F /* Build configuration list for PBXNativeTarget "FirstDayDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +491,7 @@
 				07070153188460C600A6E92F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
