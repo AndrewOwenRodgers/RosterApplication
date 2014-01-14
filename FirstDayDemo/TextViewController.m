@@ -11,7 +11,6 @@
 @interface TextViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextView *bioBox;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *releaseButton;
 
 @end
 
