@@ -11,8 +11,6 @@
 @interface CodeFellow() //This class is designed to hold contact information for a person in CodeFellow's iOS bootcamp.
 
 @property (nonatomic, readwrite) NSString *name;
-@property (nonatomic, readwrite) NSString *twitterAccount;
-@property (nonatomic, readwrite) NSString *gitHubAccount;
 @property (nonatomic, readwrite) BOOL isTeacher;
 @property (nonatomic, readwrite) UIImage *picture;
 

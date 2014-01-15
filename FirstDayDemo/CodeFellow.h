@@ -10,9 +10,9 @@
 
 @interface CodeFellow : NSObject
 
-@property (nonatomic,readonly) NSString *twitterAccount;
+@property (nonatomic) NSString *twitterAccount;
 @property (nonatomic, readonly) NSString *name;
-@property (nonatomic, readonly) NSString *gitHubAccount;
+@property (nonatomic,) NSString *gitHubAccount;
 @property (nonatomic, readonly) BOOL isTeacher;
 @property (nonatomic, readonly) UIImage *picture;
 

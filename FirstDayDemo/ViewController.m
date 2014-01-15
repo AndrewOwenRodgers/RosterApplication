@@ -20,7 +20,7 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
+- (void) viewDidLoad
 {
 //    [self copyPlist];
     [self createArrays];
@@ -29,7 +29,7 @@
     self.myTableView.dataSource = self;
 }
 
-- (void)createArrays //Copies the data from the PList in the documents directory and creates the CodeFellow objects from them
+- (void) createArrays //Copies the data from the PList in the documents directory and creates the CodeFellow objects from them
 {
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *documentsDirectory = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
@@ -51,6 +51,7 @@
         {
             [tempStudentsArray addObject:tempCF];
         }
+        NSLog(@"%@", tempCF.twitterAccount);
     }
     
     NSSortDescriptor *alphabeticalSorter = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
@@ -72,12 +73,12 @@
 //    }
 //}
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView //Determines the number of sections in the UITableView
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView //Determines the number of sections in the UITableView
 {
     return 2;
 }
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section //Determines how many cells are needed in each of the teacher sections
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section //Determines how many cells are needed in each of the teacher sections
 {
     if (section == 0)
     {
@@ -90,7 +91,7 @@
     return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section //Labels the sections for teachers and students
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section //Labels the sections for teachers and students
 {
     if(section == 0)
     {
@@ -103,7 +104,7 @@
     return 0;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath //Sets the cell texts as the name of a student or teacher
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath //Sets the cell texts as the name of a student or teacher
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath: indexPath];
     
@@ -120,12 +121,12 @@
     return cell;
 }
 
-- (void)didReceiveMemoryWarning
+- (void) didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender //Sends the name of the CodeFellow object to the TextViewController
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender //Sends the name of the CodeFellow object to the TextViewController
 {
     UITableViewCell *someCell = (UITableViewCell *)sender;
     NSIndexPath *path = [self.myTableView indexPathForCell:someCell];

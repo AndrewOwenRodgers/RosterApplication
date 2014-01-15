@@ -11,6 +11,8 @@
 
 @interface TextViewController : UIViewController
 
+<UITextFieldDelegate>;
+
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) CodeFellow *CF;
 
