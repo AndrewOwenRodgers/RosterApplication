@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CodeFellow.h"
 
 @interface TextViewController : UIViewController
 
 @property (strong,nonatomic) NSString *name;
+@property (strong,nonatomic) CodeFellow *CF;
 
 @end

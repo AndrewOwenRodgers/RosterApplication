@@ -10,7 +10,8 @@
 
 @interface TextViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextView *bioBox;
+@property (weak, nonatomic) IBOutlet UILabel *twitterLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *personPicture;
 
 @end
 
@@ -20,7 +21,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.bioBox.text = self.name;
+    self.title = self.CF.name;
+    self.twitterLabel.text = self.CF.twitterAccount;
 }
 
 - (void)didReceiveMemoryWarning

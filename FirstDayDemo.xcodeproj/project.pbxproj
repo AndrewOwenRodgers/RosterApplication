@@ -22,6 +22,8 @@
 		07070141188460C600A6E92F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07070120188460C600A6E92F /* UIKit.framework */; };
 		07070149188460C600A6E92F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 07070147188460C600A6E92F /* InfoPlist.strings */; };
 		0707014B188460C600A6E92F /* FirstDayDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0707014A188460C600A6E92F /* FirstDayDemoTests.m */; };
+		0732565C1885D4B5002DAFF8 /* Bootcamp.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0732565B1885D4B5002DAFF8 /* Bootcamp.plist */; };
+		0732565F1885E31E002DAFF8 /* CodeFellow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0732565E1885E31E002DAFF8 /* CodeFellow.m */; };
 		07BF0DE918849F47007EE003 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07BF0DE818849F47007EE003 /* TextViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,9 @@
 		07070146188460C600A6E92F /* FirstDayDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FirstDayDemoTests-Info.plist"; sourceTree = "<group>"; };
 		07070148188460C600A6E92F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0707014A188460C600A6E92F /* FirstDayDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstDayDemoTests.m; sourceTree = "<group>"; };
+		0732565B1885D4B5002DAFF8 /* Bootcamp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Bootcamp.plist; sourceTree = "<group>"; };
+		0732565D1885E31E002DAFF8 /* CodeFellow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeFellow.h; sourceTree = "<group>"; };
+		0732565E1885E31E002DAFF8 /* CodeFellow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeFellow.m; sourceTree = "<group>"; };
 		07BF0DE718849F47007EE003 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		07BF0DE818849F47007EE003 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,8 +128,11 @@
 				07070131188460C600A6E92F /* Main_iPad.storyboard */,
 				07070134188460C600A6E92F /* ViewController.h */,
 				07070135188460C600A6E92F /* ViewController.m */,
+				0732565D1885E31E002DAFF8 /* CodeFellow.h */,
+				0732565E1885E31E002DAFF8 /* CodeFellow.m */,
 				07BF0DE718849F47007EE003 /* TextViewController.h */,
 				07BF0DE818849F47007EE003 /* TextViewController.m */,
+				0732565B1885D4B5002DAFF8 /* Bootcamp.plist */,
 				07070137188460C600A6E92F /* Images.xcassets */,
 				07070123188460C600A6E92F /* Supporting Files */,
 			);
@@ -239,6 +247,7 @@
 				07070133188460C600A6E92F /* Main_iPad.storyboard in Resources */,
 				07070138188460C600A6E92F /* Images.xcassets in Resources */,
 				07070130188460C600A6E92F /* Main_iPhone.storyboard in Resources */,
+				0732565C1885D4B5002DAFF8 /* Bootcamp.plist in Resources */,
 				07070127188460C600A6E92F /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +271,7 @@
 				0707012D188460C600A6E92F /* AppDelegate.m in Sources */,
 				07070129188460C600A6E92F /* main.m in Sources */,
 				07BF0DE918849F47007EE003 /* TextViewController.m in Sources */,
+				0732565F1885E31E002DAFF8 /* CodeFellow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
