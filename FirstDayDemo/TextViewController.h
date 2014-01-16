@@ -10,10 +10,9 @@
 #import "CodeFellow.h"
 
 @interface TextViewController : UIViewController
+<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextFieldDelegate>;
 
-<UITextFieldDelegate>;
-
-@property (strong,nonatomic) NSString *name;
-@property (strong,nonatomic) CodeFellow *CF;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) CodeFellow *CF;
 
 @end

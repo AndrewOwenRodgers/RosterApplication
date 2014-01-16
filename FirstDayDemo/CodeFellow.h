@@ -11,10 +11,10 @@
 @interface CodeFellow : NSObject
 
 @property (nonatomic) NSString *twitterAccount;
+@property (nonatomic) NSString *picturePath;
+@property (nonatomic) NSString *gitHubAccount;
 @property (nonatomic, readonly) NSString *name;
-@property (nonatomic,) NSString *gitHubAccount;
 @property (nonatomic, readonly) BOOL isTeacher;
-@property (nonatomic, readonly) UIImage *picture;
 
 -(id) initWithName:(NSString *)myName andTwitter:(NSString *)myTwitter andGitHub:(NSString *) myGit andTeacherhood:(BOOL)teacherhood;
 

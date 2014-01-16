@@ -12,7 +12,6 @@
 
 @property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, readwrite) BOOL isTeacher;
-@property (nonatomic, readwrite) UIImage *picture;
 
 @end
 

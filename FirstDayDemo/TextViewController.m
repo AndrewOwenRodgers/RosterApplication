@@ -15,6 +15,7 @@
     CGFloat animatedDistance;
 }
 
+@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UITextField *twitterLabel;
 @property (weak, nonatomic) IBOutlet UITextField *gitHubLabel;
 
@@ -31,10 +32,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162; //All of these constants a
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.myImageView.layer.cornerRadius = 70;
+    self.myImageView.layer.masksToBounds = YES;
     self.title = self.CF.name;
     self.twitterLabel.delegate = self;
     self.gitHubLabel.delegate = self;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:self.CF.picturePath]) //Checks to see if the current Code Fellow has an image, and displays it if they do
+    {
+        self.myImageView.image = [UIImage imageWithContentsOfFile:self.CF.picturePath];
+    }
     
     if (!(self.CF.twitterAccount == nil))
     {
@@ -62,6 +68,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162; //All of these constants a
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma -Text fields
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField //Gets rid of the keyboard
 {
@@ -135,6 +143,69 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162; //All of these constants a
     {
         self.CF.gitHubAccount = textField.text;
     }
+}
+
+#pragma -Camera/Pictures
+
+- (IBAction)startPicker:(id)sender
+{
+    UIActionSheet *mySheet;
+    
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        mySheet = [[UIActionSheet alloc] initWithTitle:@"Pick Photo" delegate:self cancelButtonTitle:@"cancel"destructiveButtonTitle:nil otherButtonTitles: @"Camera", @"Photo Library", nil];
+    }
+    else if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+    {
+        mySheet = [[UIActionSheet alloc] initWithTitle:@"Pick Photo" delegate:self cancelButtonTitle:@"cancel"destructiveButtonTitle:nil otherButtonTitles: @"Photo Library", nil];
+    }
+    else
+    {
+        return;
+    }
+    
+    [mySheet showFromBarButtonItem:sender animated:YES];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *myPicker = [[UIImagePickerController alloc] init];
+    myPicker.delegate = self;
+    myPicker.allowsEditing = YES;
+    
+    if ([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"Camera"])
+    {
+        myPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    else
+    {
+        myPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    [self presentViewController:myPicker animated:YES completion:nil];
+    
+}
+
+- (void) imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        UIImage *editedImage = [info objectForKey: UIImagePickerControllerEditedImage];
+        self.myImageView.image = editedImage;
+        
+        NSData *imageData = UIImagePNGRepresentation(editedImage);
+        self.CF.picturePath = [[self docsDirectoryPath] stringByAppendingString: [NSString stringWithFormat:@"%@.png", self.CF.name]];
+        [imageData writeToFile:self.CF.picturePath atomically:YES];
+    }];
+}
+
+- (NSString *)docsDirectoryPath
+{
+    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentPath = [searchPaths lastObject];
+    
+    return documentPath;
 }
 
 @end

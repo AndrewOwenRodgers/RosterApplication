@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) NSArray *myStudentsArray;
 @property (strong, nonatomic) NSArray *myTeachersArray;
-@property (weak, nonatomic) IBOutlet UIButton *callTextView;
 
 @end
 
@@ -29,11 +28,41 @@
     self.myTableView.dataSource = self;
 }
 
+- (void) didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender //Sends the name of the CodeFellow object to the TextViewController
+{
+    UITableViewCell *someCell = (UITableViewCell *)sender;
+    NSIndexPath *path = [self.myTableView indexPathForCell:someCell];
+    if ([segue.identifier isEqualToString: @"detailSegue"])
+    {
+        TextViewController *destinationVC = segue.destinationViewController;
+        destinationVC.name = someCell.textLabel.text;
+        if (path.section == 0)
+        {
+            destinationVC.CF = [self.myStudentsArray objectAtIndex:someCell.tag];
+        }
+        else
+        {
+            destinationVC.CF = [self.myTeachersArray objectAtIndex:someCell.tag];
+        }
+    }
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.myTableView reloadData];
+}
+
 - (void) createArrays //Copies the data from the PList in the documents directory and creates the CodeFellow objects from them
 {
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-//    NSString *filePlace = [documentsDirectory stringByAppendingString:@"Bootcamp.plist"];
+    //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //    NSString *documentsDirectory = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    //    NSString *filePlace = [documentsDirectory stringByAppendingString:@"Bootcamp.plist"];
     
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Bootcamp" ofType:@"plist"];
     NSArray *peopleArray = [[NSArray alloc] initWithContentsOfFile:bundlePath]; //Contains an array with all the dictionaries of the PList's information NOTE TO SELF: ANDREW, CHANGE THIS PATH BACK TOMORROW
@@ -42,7 +71,11 @@
     
     for (NSDictionary *currentPerson in peopleArray) //This loop builds CodeFellow objects for each value in the array peopleArray, then sorts them into teacher and student arrays
     {
-        CodeFellow *tempCF = [[CodeFellow alloc]initWithName:[currentPerson objectForKey:@"name"] andTwitter:[currentPerson objectForKey:@"twitter"] andGitHub:[currentPerson objectForKey:@"github"] andTeacherhood:[[currentPerson objectForKey:@"isTeacher"] boolValue]];
+        CodeFellow *tempCF = [[CodeFellow alloc]initWithName:[currentPerson objectForKey:@"name"]
+                                                  andTwitter:[currentPerson objectForKey:@"twitter"]
+                                                   andGitHub:[currentPerson objectForKey:@"github"]
+                                              andTeacherhood:[[currentPerson objectForKey:@"isTeacher"] boolValue]];
+        
         if ([[currentPerson objectForKey:@"isTeacher"] boolValue])
         {
             [tempTeachersArray addObject:tempCF];
@@ -72,6 +105,8 @@
 //        [fm copyItemAtPath:bundlePath toPath:documentsDirectory error:nil];
 //    }
 //}
+
+#pragma -TableView / Cells
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView //Determines the number of sections in the UITableView
 {
@@ -111,38 +146,32 @@
     if (indexPath.section == 0)
     {
         cell.textLabel.text = [[self.myStudentsArray objectAtIndex:indexPath.row] name];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[[self.myStudentsArray objectAtIndex:indexPath.row] picturePath]])
+        {
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+            imgView.image = [UIImage imageWithContentsOfFile:[[self.myStudentsArray objectAtIndex:indexPath.row] picturePath]];
+            cell.imageView.layer.cornerRadius = 8;
+            cell.imageView.layer.masksToBounds = YES;
+            cell.imageView.image = imgView.image;
+        }
     }
     
     else if (indexPath.section == 1)
     {
         cell.textLabel.text = [[self.myTeachersArray objectAtIndex:indexPath.row] name];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[[self.myTeachersArray objectAtIndex:indexPath.row] picturePath]])
+        {
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+            imgView.image = [UIImage imageWithContentsOfFile:[[self.myTeachersArray objectAtIndex:indexPath.row] picturePath]];
+            cell.imageView.layer.cornerRadius = 8;
+            cell.imageView.layer.masksToBounds = YES;
+            cell.imageView.image = imgView.image;
+        }
+
     }
     cell.tag = indexPath.row;
     return cell;
 }
 
-- (void) didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender //Sends the name of the CodeFellow object to the TextViewController
-{
-    UITableViewCell *someCell = (UITableViewCell *)sender;
-    NSIndexPath *path = [self.myTableView indexPathForCell:someCell];
-    if ([segue.identifier isEqualToString: @"detailSegue"])
-    {
-        TextViewController *destinationVC = segue.destinationViewController;
-        destinationVC.name = someCell.textLabel.text;
-        if (path.section == 0)
-        {
-            destinationVC.CF = [self.myStudentsArray objectAtIndex:someCell.tag];
-        }
-        else
-        {
-            destinationVC.CF = [self.myTeachersArray objectAtIndex:someCell.tag];
-        }
-    }
-}
 
 @end
