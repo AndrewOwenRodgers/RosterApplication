@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface CodeFellow : NSObject
+<NSCoding>;
 
 @property (nonatomic) NSString *twitterAccount;
 @property (nonatomic) NSString *picturePath;
@@ -16,6 +17,6 @@
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) BOOL isTeacher;
 
--(id) initWithName:(NSString *)myName andTwitter:(NSString *)myTwitter andGitHub:(NSString *) myGit andTeacherhood:(BOOL)teacherhood;
+-(id) initWithName:(NSString *)myName andTwitter:(NSString *)myTwitter andGitHub:(NSString *) myGit andTeacherhood:(BOOL)teacherhood andPath:(NSString *)path;
 
 @end

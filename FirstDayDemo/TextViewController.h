@@ -15,4 +15,6 @@
 @property (strong, nonatomic) NSString *name;
 @property (weak, nonatomic) CodeFellow *CF;
 
++ (NSString *)docsDirectoryPath;
+
 @end

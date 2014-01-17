@@ -194,14 +194,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         UIImage *editedImage = [info objectForKey: UIImagePickerControllerEditedImage];
         self.myImageView.image = editedImage;
         
-        NSData *imageData = UIImagePNGRepresentation(editedImage);
-        self.CF.picturePath = [[self docsDirectoryPath] stringByAppendingString: [NSString stringWithFormat:@"%@.png", self.CF.name]];
-        NSLog(@"%@", self.CF.picturePath);
+        NSData *imageData = UIImageJPEGRepresentation(editedImage, 0.5);
+        self.CF.picturePath = [[TextViewController docsDirectoryPath] stringByAppendingString: [NSString stringWithFormat:@"%@.jpeg", self.CF.name]];
         [imageData writeToFile:self.CF.picturePath atomically:YES];
     }];
 }
 
-- (NSString *)docsDirectoryPath
++ (NSString *)docsDirectoryPath
 {
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [searchPaths lastObject];

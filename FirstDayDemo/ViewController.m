@@ -22,7 +22,6 @@
 
 - (void) viewDidLoad
 {
-//    [self copyPlist];
     [super viewDidLoad];
     [self createArrays];
     self.myTableView.delegate = self;
@@ -53,59 +52,57 @@
     }
 }
 
-- (void) viewWillAppear:(BOOL)animated
+- (void) viewDidAppear:(BOOL)animated //Saves data to the application's PList and also reloads the table's data
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     [self.myTableView reloadData];
+    [NSKeyedArchiver archiveRootObject:self.myStudentsArray toFile:[[TextViewController docsDirectoryPath] stringByAppendingString: @"Students archive"]];
+    [NSKeyedArchiver archiveRootObject:self.myTeachersArray toFile:[[TextViewController docsDirectoryPath] stringByAppendingString: @"Teachers archive"]];
 }
 
-- (void) createArrays //Copies the data from the PList in the documents directory and creates the CodeFellow objects from them
+
+- (void) createArrays //Copies the data from the PList in the documents directory and creates the CodeFellow objects from them OR unarchives the files into the arrays
 {
-    //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    //    NSString *documentsDirectory = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    //    NSString *filePlace = [documentsDirectory stringByAppendingString:@"Bootcamp.plist"];
-    
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Bootcamp" ofType:@"plist"];
-    NSArray *peopleArray = [[NSArray alloc] initWithContentsOfFile:bundlePath]; //Contains an array with all the dictionaries of the PList's information NOTE TO SELF: ANDREW, CHANGE THIS PATH BACK TOMORROW
-    NSMutableArray *tempStudentsArray = [[NSMutableArray alloc] initWithObjects: nil];
-    NSMutableArray *tempTeachersArray = [[NSMutableArray alloc] initWithObjects: nil];
-    
-    for (NSDictionary *currentPerson in peopleArray) //This loop builds CodeFellow objects for each value in the array peopleArray, then sorts them into teacher and student arrays
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (!([fileManager fileExistsAtPath:[[TextViewController docsDirectoryPath] stringByAppendingString:@"Students archive"]]))
     {
-        CodeFellow *tempCF = [[CodeFellow alloc]initWithName:[currentPerson objectForKey:@"name"]
-                                                  andTwitter:[currentPerson objectForKey:@"twitter"]
-                                                   andGitHub:[currentPerson objectForKey:@"github"]
-                                              andTeacherhood:[[currentPerson objectForKey:@"isTeacher"] boolValue]];
+        NSString *filePlace = [[NSBundle mainBundle] pathForResource:@"Bootcamp" ofType:@"plist"];
+        NSArray *peopleArray = [[NSArray alloc] initWithContentsOfFile:filePlace]; //Contains an array with all the dictionaries of the PList's information
+        NSMutableArray *tempStudentsArray = [[NSMutableArray alloc] initWithObjects: nil];
+        NSMutableArray *tempTeachersArray = [[NSMutableArray alloc] initWithObjects: nil];
+    
+        for (NSDictionary *currentPerson in peopleArray) //This loop builds CodeFellow objects for each value in the array peopleArray, then sorts them into teacher and student arrays
+        {
+            CodeFellow *tempCF = [[CodeFellow alloc]initWithName:[currentPerson objectForKey:@"name"]
+                                                      andTwitter:[currentPerson objectForKey:@"twitter"]
+                                                       andGitHub:[currentPerson objectForKey:@"github"]
+                                                  andTeacherhood:[[currentPerson objectForKey:@"isTeacher"] boolValue]
+                                                         andPath:[currentPerson objectForKey:@"path"]];
         
-        if ([[currentPerson objectForKey:@"isTeacher"] boolValue])
-        {
+            if ([[currentPerson objectForKey:@"isTeacher"] boolValue])
+            {
             [tempTeachersArray addObject:tempCF];
+            }
+            else
+            {
+                [tempStudentsArray addObject:tempCF];
+            }
         }
-        else
-        {
-            [tempStudentsArray addObject:tempCF];
-        }
-        NSLog(@"%@", tempCF.twitterAccount);
+        
+        NSSortDescriptor *alphabeticalSorter = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+        NSArray *sortDescriptors = @[alphabeticalSorter];
+    
+        self.myStudentsArray = [tempStudentsArray sortedArrayUsingDescriptors:sortDescriptors];
+        self.myTeachersArray = [tempTeachersArray sortedArrayUsingDescriptors:sortDescriptors];
     }
     
-    NSSortDescriptor *alphabeticalSorter = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSArray *sortDescriptors = @[alphabeticalSorter];
-    
-    self.myStudentsArray = [tempStudentsArray sortedArrayUsingDescriptors:sortDescriptors];
-    self.myTeachersArray = [tempTeachersArray sortedArrayUsingDescriptors:sortDescriptors];
+    else
+    {
+        NSString *documentsDirectory = [TextViewController docsDirectoryPath];
+        self.myStudentsArray = [NSKeyedUnarchiver unarchiveObjectWithFile:[documentsDirectory stringByAppendingString:@"Students archive"]];
+        self.myTeachersArray = [NSKeyedUnarchiver unarchiveObjectWithFile:[documentsDirectory stringByAppendingString:@"Teachers archive"]];
+    }
 }
-
-//- (void)copyPlist //Copies the PList from the main bundle into the documents directory
-//{
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-//    if (![fm fileExistsAtPath:[documentsDirectory stringByAppendingString: @"Bootcamp.plist"]])
-//    {
-//        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Bootcamp" ofType:@"plist"];
-//        [fm copyItemAtPath:bundlePath toPath:documentsDirectory error:nil];
-//    }
-//}
 
 #pragma -TableView / Cells
 
