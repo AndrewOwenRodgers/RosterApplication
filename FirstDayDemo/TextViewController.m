@@ -42,7 +42,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162; //All of these constants a
         self.myImageView.image = [UIImage imageWithContentsOfFile:self.CF.picturePath];
     }
     
-    if (!(self.CF.twitterAccount == nil))
+    if (!(self.CF.twitterAccount == NULL))
     {
         self.twitterLabel.text = self.CF.twitterAccount;
     }
@@ -52,7 +52,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162; //All of these constants a
         self.twitterLabel.textColor = [UIColor darkGrayColor];
     }
     
-    if (!(self.CF.gitHubAccount == nil))
+    if (!(self.CF.gitHubAccount == NULL))
     {
         self.gitHubLabel.text = self.CF.gitHubAccount;
     }
@@ -196,6 +196,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         
         NSData *imageData = UIImagePNGRepresentation(editedImage);
         self.CF.picturePath = [[self docsDirectoryPath] stringByAppendingString: [NSString stringWithFormat:@"%@.png", self.CF.name]];
+        NSLog(@"%@", self.CF.picturePath);
         [imageData writeToFile:self.CF.picturePath atomically:YES];
     }];
 }

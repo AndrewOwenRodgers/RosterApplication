@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "TextViewController.h"
 #import "CodeFellow.h"
+#import "CodeFellowCell.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -22,8 +23,8 @@
 - (void) viewDidLoad
 {
 //    [self copyPlist];
-    [self createArrays];
     [super viewDidLoad];
+    [self createArrays];
     self.myTableView.delegate = self;
     self.myTableView.dataSource = self;
 }
@@ -35,7 +36,7 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender //Sends the name of the CodeFellow object to the TextViewController
 {
-    UITableViewCell *someCell = (UITableViewCell *)sender;
+    CodeFellowCell *someCell = (CodeFellowCell *)sender;
     NSIndexPath *path = [self.myTableView indexPathForCell:someCell];
     if ([segue.identifier isEqualToString: @"detailSegue"])
     {
@@ -139,35 +140,17 @@
     return 0;
 }
 
-- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath //Sets the cell texts as the name of a student or teacher
+- (CodeFellowCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath //Builds the cells
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath: indexPath];
+    CodeFellowCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell"];
     
     if (indexPath.section == 0)
     {
-        cell.textLabel.text = [[self.myStudentsArray objectAtIndex:indexPath.row] name];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[[self.myStudentsArray objectAtIndex:indexPath.row] picturePath]])
-        {
-            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-            imgView.image = [UIImage imageWithContentsOfFile:[[self.myStudentsArray objectAtIndex:indexPath.row] picturePath]];
-            cell.imageView.layer.cornerRadius = 8;
-            cell.imageView.layer.masksToBounds = YES;
-            cell.imageView.image = imgView.image;
-        }
+        [cell setCF:[self.myStudentsArray objectAtIndex:indexPath.row]];
     }
-    
     else if (indexPath.section == 1)
     {
-        cell.textLabel.text = [[self.myTeachersArray objectAtIndex:indexPath.row] name];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[[self.myTeachersArray objectAtIndex:indexPath.row] picturePath]])
-        {
-            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-            imgView.image = [UIImage imageWithContentsOfFile:[[self.myTeachersArray objectAtIndex:indexPath.row] picturePath]];
-            cell.imageView.layer.cornerRadius = 8;
-            cell.imageView.layer.masksToBounds = YES;
-            cell.imageView.image = imgView.image;
-        }
-
+        [cell setCF:[self.myTeachersArray objectAtIndex:indexPath.row]];
     }
     cell.tag = indexPath.row;
     return cell;

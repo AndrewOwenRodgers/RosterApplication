@@ -13,6 +13,6 @@
 <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, UITextFieldDelegate>;
 
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) CodeFellow *CF;
+@property (weak, nonatomic) CodeFellow *CF;
 
 @end
